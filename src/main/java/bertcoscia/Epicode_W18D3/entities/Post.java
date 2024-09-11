@@ -1,6 +1,7 @@
 package bertcoscia.Epicode_W18D3.entities;
 
 import bertcoscia.Epicode_W18D3.enums.PostCategory;
+import bertcoscia.Epicode_W18D3.payloads.PostsPayload;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,4 +29,12 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+
+    public Post(PostCategory category, String title, String content, int readingTime, Author author) {
+        this.category = category;
+        this.title = title;
+        this.content = content;
+        this.readingTime = readingTime;
+        this.author = author;
+    }
 }

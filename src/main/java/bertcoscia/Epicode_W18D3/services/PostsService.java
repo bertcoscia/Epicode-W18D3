@@ -1,5 +1,6 @@
 package bertcoscia.Epicode_W18D3.services;
 
+import bertcoscia.Epicode_W18D3.entities.Author;
 import bertcoscia.Epicode_W18D3.entities.Post;
 import bertcoscia.Epicode_W18D3.exceptions.BadRequestException;
 import bertcoscia.Epicode_W18D3.exceptions.NotFoundException;
@@ -20,11 +21,18 @@ public class PostsService {
     @Autowired
     private PostsRepository postsRepository;
 
+    @Autowired
+    private AuthorsService authorsService;
+
+    public Post createPost(PostsPayload payload) {
+        Author author = authorsService.findById(payload.getAuthorId());
+        return new Post(payload.getCategory(), payload.getTitle(), payload.getContent(), payload.getReadingTime(), author);
+    }
+
     public Post save(Post body) {
         if (body.getId() == null && this.postsRepository.existsByTitle(body.getTitle())) throw new BadRequestException("There is already a post with the title " + body.getTitle());
         body.setCoverUrl("https://picsum.photos/200/300");
-        PostsPayload payload = new PostsPayload(body.getCategory(), body.getTitle(), body.getCoverUrl(), body.getContent(), body.getReadingTime(), body.getAuthor().getId());
-        return this.postsRepository.save(payload);
+        return this.postsRepository.save(body);
     }
 
     public Page<Post> findAll(int page, int size, String sortBy) {
