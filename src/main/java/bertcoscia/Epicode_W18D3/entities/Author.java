@@ -22,5 +22,7 @@ public class Author {
     private String email;
     @Column(name = "date_of_birth")
     private LocalDate birthDate;
+    @Column(name = "avatar_url")
     private String avatarUrl;
+
 }
