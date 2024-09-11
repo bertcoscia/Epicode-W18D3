@@ -25,7 +25,7 @@ public class AuthorsController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Author save(@RequestBody Author body) {
-        return this.authorsService.save(body)
+        return this.authorsService.save(body);
     }
 
     // GET http://localhost:3001/authors/{authorId}
@@ -42,7 +42,8 @@ public class AuthorsController {
 
     // DELETE http://localhost:3001/authors/{authorId}
     @DeleteMapping("/{authorId}")
-    public void findByIdAndDelete(UUID authorId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void findByIdAndDelete(@PathVariable UUID authorId) {
         this.authorsService.findByIdAndDelete(authorId);
     }
 }
